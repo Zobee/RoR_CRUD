@@ -1,0 +1,49 @@
+<% if user_signed_in? %>
+<h1>Friends</h1>
+<table class="table table-borderless table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Twitter</th>
+      <th scope="col">Show</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @friends.each do |friend| %>
+      <% if friend.user == current_user%>
+      <tr>
+        <td>
+          <%= friend.first_name %> 
+          <%= friend.last_name %>
+        </td>
+        <td><%= friend.email %></td>
+        <td><%= friend.phone %></td>
+        <td><%= friend.twitter %></td>
+        <td><%= link_to 'View', friend, class:"btn btn-primary" %></td>
+        <td><%= link_to 'Edit', edit_friend_path(friend), class:"btn btn-info" %></td>
+        <td><%= link_to 'Delete', friend, class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+
+<%= link_to 'New Friend', new_friend_path, class:"btn btn-dark" %>
+
+<% else %>
+
+<h1>Landing Page</h1>
+<h2>Sign up today!</h2>
+<%= link_to "Sign Up", new_user_registration_path, class:"btn btn-primary"%>
+<%= link_to "Log In", new_user_session_path, class:"btn btn-primary"%>
+
+<% end %>
